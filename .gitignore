@@ -1,0 +1,33 @@
+node_modules/
+dist/
+coverage/
+.vitest/
+.cache/
+
+# Local env and secrets
+.env
+.env.*
+!.env.example
+
+# Keep personal team configs local.
+*.local.yaml
+*.local.yml
+*.local.json
+
+# Logs and package artifacts
+*.log
+*.tgz
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Python helper caches, if local scripts are used
+__pycache__/
+*.py[cod]
+.pytest_cache/

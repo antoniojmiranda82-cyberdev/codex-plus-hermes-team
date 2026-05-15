@@ -1,0 +1,66 @@
+# Public example. Copy to ~/.codex-plus-hermes-team/team.yaml and edit.
+
+hermes:
+  command: hermes
+  profileFlag: "--profile"
+  defaultCwd: /path/to/your/project-or-team-root
+  timeoutMs: 600000
+  defaultToolsets: []
+
+discovery:
+  enabled: true
+  # Optional. Useful if your Hermes team profiles share a prefix:
+  # profilePrefix: "team-"
+  includeStopped: true
+
+routing:
+  defaultProfiles:
+    - architect
+    - researcher
+    - reviewer
+  maxPanelAgents: 4
+
+safety:
+  # Default for ask_agent, ask_panel, and Kanban task body instructions.
+  # Options: advice_only, read_only, local_files_allowed,
+  # external_side_effects_need_approval, external_side_effects_allowed.
+  defaultSideEffectPolicy: advice_only
+
+kanban:
+  enabled: false
+  # board: your-board
+  # dispatcherProfile: default
+  workspace: scratch
+  createdBy: codex-plus-hermes-team
+  maxRuntime: 30m
+
+agents:
+  - profile: architect
+    displayName: Architect
+    role: architecture
+    description: System design, decomposition, tradeoffs, implementation plans.
+    capabilities:
+      - architecture
+      - planning
+      - tradeoffs
+      - system design
+
+  - profile: researcher
+    displayName: Researcher
+    role: research
+    description: Source finding, documentation reading, competitor scans, evidence.
+    capabilities:
+      - research
+      - sources
+      - documentation
+      - market analysis
+
+  - profile: reviewer
+    displayName: Reviewer
+    role: review
+    description: Risk review, regressions, missing tests, security and product gaps.
+    capabilities:
+      - code review
+      - risk analysis
+      - test gaps
+      - security

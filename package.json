@@ -1,0 +1,62 @@
+{
+  "name": "codex-plus-hermes-team",
+  "version": "0.1.0",
+  "description": "Local MCP bridge that gives Codex a specialist Hermes Agent team.",
+  "type": "module",
+  "bin": {
+    "codex-plus-hermes-team": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "examples",
+    "skills",
+    "docs",
+    "README.md",
+    "LICENSE",
+    "NOTICE.md",
+    "SECURITY.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "postbuild": "node -e \"require('node:fs').chmodSync('dist/index.js', 0o755)\"",
+    "prepare": "npm run build",
+    "dev": "tsx src/index.ts",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "keywords": [
+    "codex",
+    "hermes-agent",
+    "mcp",
+    "ai-agents",
+    "agent-team",
+    "claude-code",
+    "cursor",
+    "kanban",
+    "automation"
+  ],
+  "author": "Aleksei Ulianov / Sprut_AI",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlekseiUL/codex-plus-hermes-team.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AlekseiUL/codex-plus-hermes-team/issues"
+  },
+  "homepage": "https://github.com/AlekseiUL/codex-plus-hermes-team#readme",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "yaml": "^2.9.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.3",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.14"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

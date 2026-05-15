@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "hermes-team": {
+      "command": "codex-plus-hermes-team",
+      "env": {
+        "CODEX_PLUS_HERMES_TEAM_CONFIG": "/absolute/path/to/team.yaml"
+      }
+    }
+  }
+}

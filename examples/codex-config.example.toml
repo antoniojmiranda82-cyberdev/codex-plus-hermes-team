@@ -1,0 +1,10 @@
+# Add this to your Codex config after installing/building the bridge.
+
+[mcp_servers.hermes-team]
+command = "codex-plus-hermes-team"
+
+# Optional environment overrides:
+# [mcp_servers.hermes-team.env]
+# CODEX_PLUS_HERMES_TEAM_CONFIG = "/absolute/path/to/team.yaml"
+# HERMES_PROFILE_PREFIX = "team-"
+# HERMES_COMMAND = "hermes"

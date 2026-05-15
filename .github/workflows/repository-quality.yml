@@ -1,0 +1,117 @@
+name: Repository quality
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test
+        run: npm test
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      - name: Check JSON files
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          for path in Path('.').rglob('*.json'):
+              if any(part in {'node_modules', 'dist', '.git'} for part in path.parts):
+                  continue
+              json.loads(path.read_text(encoding='utf-8'))
+              print(f'json ok: {path}')
+          PY
+
+      - name: Check local Markdown links
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          missing = []
+          link_re = re.compile(r'\[[^\]]+\]\(([^)]+)\)')
+          for md in Path('.').rglob('*.md'):
+              if any(part in {'node_modules', 'dist', '.git'} for part in md.parts):
+                  continue
+              text = md.read_text(encoding='utf-8')
+              for raw in link_re.findall(text):
+                  target = raw.split('#', 1)[0].strip()
+                  if not target or target.startswith(('http://', 'https://', 'mailto:', 'tel:')):
+                      continue
+                  if target.startswith('<') and target.endswith('>'):
+                      target = target[1:-1]
+                  candidate = (md.parent / target).resolve()
+                  if not candidate.exists():
+                      missing.append(f'{md}: {raw}')
+          if missing:
+              print('Missing local Markdown links:')
+              print('\n'.join(missing))
+              raise SystemExit(1)
+          print('Markdown links ok')
+          PY
+
+      - name: Scan for private paths and generated leaks
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import re
+          import subprocess
+          import sys
+
+          patterns = {
+              'private_path': re.compile(r'/Users/[^/\s]+|MIKE_CENTER|AI_CENTER'),
+              'bytecode': re.compile(r'(__pycache__|\.pyc$)'),
+              'bad_placeholder': re.compile(r'YOUR_ORG|path/to/path/to'),
+              'accusation': re.compile(r'(?i)(\bstolen\b|\btheft\b|\bукрал\b|\bкраж[аеиуой]*\b|\bворов(?:ство|али|ал|ать)?\b)'),
+          }
+          allow = set()
+          bad = []
+          files = subprocess.check_output(['git', 'ls-files'], text=True).splitlines()
+          skipped_files = {'.gitignore', '.github/workflows/repository-quality.yml'}
+          for file in files:
+              if file in skipped_files:
+                  continue
+              if file.endswith(('.pyc', '.pyo')) or '__pycache__' in file:
+                  bad.append(('bytecode', file, 0, ''))
+                  continue
+              try:
+                  data = subprocess.check_output(['git', 'show', f'HEAD:{file}'], stderr=subprocess.DEVNULL)
+              except subprocess.CalledProcessError:
+                  data = open(file, 'rb').read()
+              if b'\0' in data[:4096]:
+                  continue
+              text = data.decode('utf-8', errors='ignore')
+              for line_no, line in enumerate(text.splitlines(), 1):
+                  for kind, rx in patterns.items():
+                      if rx.search(line) and not any(file == a_file and marker in line for a_file, marker in allow):
+                          bad.append((kind, file, line_no, line[:180]))
+          for item in bad[:80]:
+              print(' | '.join(map(str, item)))
+          print('findings:', len(bad))
+          raise SystemExit(1 if bad else 0)
+          PY
