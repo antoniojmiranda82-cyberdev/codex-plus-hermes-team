@@ -62,7 +62,15 @@ The MCP server exposes these tools:
 - `hermes_team_get_task` — read a durable Hermes Kanban task.
 - `hermes_team_collect_result` — collect task status, runs, final summary, and result signals.
 
-## Install from source
+## Install
+
+From GitHub with npm:
+
+```bash
+npm install -g github:AlekseiUL/codex-plus-hermes-team
+```
+
+Or from source:
 
 ```bash
 git clone https://github.com/AlekseiUL/codex-plus-hermes-team.git
@@ -312,6 +320,14 @@ Codex остаётся рабочим интерфейсом и финальны
 Не подходит, если нужен hosted dashboard, model provider для Codex или система, где агенты сами без разрешения публикуют, деплоят, покупают, удаляют или пишут людям.
 
 ## Быстрый старт
+
+Установка напрямую из GitHub через npm:
+
+```bash
+npm install -g github:AlekseiUL/codex-plus-hermes-team
+```
+
+Или из исходников:
 
 ```bash
 git clone https://github.com/AlekseiUL/codex-plus-hermes-team.git

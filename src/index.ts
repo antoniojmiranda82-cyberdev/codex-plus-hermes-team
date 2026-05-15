@@ -286,8 +286,7 @@ async function runCli(command: string): Promise<number> {
     case "init-config":
       return initConfig(process.argv[3]);
     case "doctor":
-      await doctor();
-      return 0;
+      return (await doctor()) ? 0 : 1;
     default:
       console.error(`Unknown command: ${command}\n`);
       printHelp();
@@ -325,7 +324,7 @@ function initConfig(targetPath?: string): number {
   return 0;
 }
 
-async function doctor() {
+async function doctor(): Promise<boolean> {
   const configPath = getConfigPath();
   const config = loadConfig(configPath);
   const provider = new HermesCliProvider(config);
@@ -338,10 +337,12 @@ async function doctor() {
   const discovered = await provider.discoverAgents().catch(() => []);
   const agents = mergeAgents(config.agents, discovered);
 
+  const ok = Boolean(health.ok) && agents.length > 0;
+
   console.log(
     JSON.stringify(
       {
-        ok: Boolean(health.ok) && agents.length > 0,
+        ok,
         configPath,
         node: process.version,
         hermes: health,
@@ -361,6 +362,7 @@ async function doctor() {
       2
     )
   );
+  return ok;
 }
 
 function runtime() {
