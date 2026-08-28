@@ -62,7 +62,7 @@ export function formatApprovalRequest(request: ApprovalRequest): string {
   ].join("\n");
 }
 
-export type ExecutiveBriefInput = {
+export type SlackExecutiveBriefInput = {
   generatedAt: string;
   revenue?: number;
   profit?: number;
@@ -72,7 +72,7 @@ export type ExecutiveBriefInput = {
   approvalsPending: number;
 };
 
-export function formatExecutiveBrief(input: ExecutiveBriefInput): string {
+export function formatExecutiveBrief(input: SlackExecutiveBriefInput): string {
   const money = (value: number | undefined) => (value === undefined ? "n/a" : `$${value.toFixed(2)}`);
   return [
     "**Q COMMERCE EXECUTIVE BRIEF**",
