@@ -4,7 +4,8 @@
   "description": "Local MCP bridge that gives Codex a specialist Hermes Agent team.",
   "type": "module",
   "bin": {
-    "codex-plus-hermes-team": "./dist/index.js"
+    "codex-plus-hermes-team": "./dist/index.js",
+    "asset-dream-operator": "./dist/operator-server.js"
   },
   "files": [
     "dist",
@@ -18,9 +19,10 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "postbuild": "node -e \"require('node:fs').chmodSync('dist/index.js', 0o755)\"",
+    "postbuild": "node -e \"const fs=require('node:fs'); fs.chmodSync('dist/index.js',0o755); if(fs.existsSync('dist/operator-server.js')) fs.chmodSync('dist/operator-server.js',0o755)\"",
     "prepare": "npm run build",
     "dev": "tsx src/index.ts",
+    "dev:operator": "tsx src/operator-server.ts",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
