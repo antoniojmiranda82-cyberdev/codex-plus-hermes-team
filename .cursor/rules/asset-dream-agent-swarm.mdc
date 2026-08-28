@@ -1,0 +1,37 @@
+---
+description: Asset Ave + Dream Blvd agent swarm implementation lane
+alwaysApply: true
+---
+
+# Cursor Assignment
+
+Use `ops/ASSET_DREAM_DELEGATION.md` as the source of truth.
+
+Primary lane: implement the operator skeleton and dashboard integration without changing product scope.
+
+## Immediate implementation order
+1. Add typed business/task/agent contracts after checking Claude's contract guidance if present.
+2. Add task persistence suitable for local MVP use.
+3. Add orchestrator endpoints/services for list agents, create/list/get tasks, run mock/provider adapter, retry, and status transitions.
+4. Add a Slack reporter abstraction with dry-run mode only by default.
+5. Add a simple responsive dashboard showing:
+   - Asset Ave / Dream Blvd switcher
+   - agent roster and status
+   - task queue
+   - activity/log feed
+   - queued/running/completed/failed metrics
+6. Seed specialist roles from `ops/team.asset-dream.example.yaml`.
+7. Add tests for routing, legal task-state transitions, retry behavior, dry-run reporter behavior, and approval boundaries.
+8. Create `checkpoints/` notes after each stable batch.
+
+## Engineering rules
+- No secrets in source or UI.
+- No silent provider failures.
+- No external side effect without explicit approved path.
+- Mock mode must work before live provider configuration.
+- Keep existing MCP tool behavior backward-compatible.
+- Do not duplicate Shopify inventory/pricing truth for Asset Ave.
+- Keep Dream Blvd commerce operations compatible with WooCommerce-oriented workflows.
+
+## Completion signal
+A new developer can clone the branch, install dependencies, run tests/build, start the local service/dashboard, see both businesses and seeded agents, create a task, run it in mock mode, and inspect status/log output.
