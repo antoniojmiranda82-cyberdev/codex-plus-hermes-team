@@ -3,10 +3,10 @@ import { resolveSlackRoute } from "../src/slack-routing.js";
 
 describe("project Slack routing", () => {
   const channels = {
-    commandCenter: "C0BSWA3SCGN",
-    activity: "C0BTFDRM6QZ",
-    salesCommerce: "C0BSY7PKY1G",
-    marketingSeo: "C0BSY7NKP42"
+    commandCenter: "C_COMMAND",
+    activity: "C_ACTIVITY",
+    salesCommerce: "C_COMMERCE",
+    marketingSeo: "C_MARKETING"
   };
 
   it("routes approval requests to command center", () => {
