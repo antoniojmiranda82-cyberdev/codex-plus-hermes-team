@@ -1,6 +1,7 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import type { BusinessId, OperatorService } from "./operator.js";
+import { assertAssetDreamProfile } from "./project-rosters.js";
 
 const BusinessSchema = z.enum(["asset-ave", "dream-blvd"]);
 
@@ -20,7 +21,7 @@ export function registerOperatorTools(server: McpServer, operator: OperatorServi
           business,
           title,
           prompt,
-          agentProfile,
+          agentProfile: assertAssetDreamProfile(agentProfile),
           approvalRequirement: requiresExternalApproval ? "external_side_effect" : "none"
         })
       )
