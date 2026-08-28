@@ -11,9 +11,19 @@ import {
   type StoreWriteResult
 } from "../store-adapter.js";
 
+export interface AssetAveReadSource {
+  health(): Promise<StoreHealth>;
+  products(): Promise<ProductSnapshot[]>;
+  orders(): Promise<OrderSnapshot[]>;
+  inventory(): Promise<InventorySnapshot[]>;
+  customers(): Promise<CustomerSnapshot[]>;
+  metrics(): Promise<StoreMetrics>;
+}
+
 export type AssetAveAdapterConfig = {
   storeDomain?: string;
   apiToken?: string;
+  readSource?: AssetAveReadSource;
 };
 
 export class AssetAveAdapter extends BaseStoreAdapter {
@@ -26,20 +36,37 @@ export class AssetAveAdapter extends BaseStoreAdapter {
   }
 
   async health(): Promise<StoreHealth> {
-    const configured = Boolean(this.config.storeDomain && this.config.apiToken);
+    if (this.config.readSource) {
+      return this.config.readSource.health();
+    }
+
     return {
-      ok: configured,
+      ok: false,
       checkedAt: new Date().toISOString(),
-      message: configured ? "adapter configured" : "Shopify credentials not configured"
+      message: this.config.storeDomain
+        ? "Shopify read source not configured"
+        : "Shopify store domain and read source not configured"
     };
   }
 
-  async products(): Promise<ProductSnapshot[]> { return []; }
-  async orders(): Promise<OrderSnapshot[]> { return []; }
-  async inventory(): Promise<InventorySnapshot[]> { return []; }
-  async customers(): Promise<CustomerSnapshot[]> { return []; }
+  async products(): Promise<ProductSnapshot[]> {
+    return this.config.readSource?.products() ?? [];
+  }
+
+  async orders(): Promise<OrderSnapshot[]> {
+    return this.config.readSource?.orders() ?? [];
+  }
+
+  async inventory(): Promise<InventorySnapshot[]> {
+    return this.config.readSource?.inventory() ?? [];
+  }
+
+  async customers(): Promise<CustomerSnapshot[]> {
+    return this.config.readSource?.customers() ?? [];
+  }
+
   async metrics(): Promise<StoreMetrics> {
-    return { capturedAt: new Date().toISOString() };
+    return this.config.readSource?.metrics() ?? { capturedAt: new Date().toISOString() };
   }
 
   protected async executeWrite(_request: StoreWriteRequest): Promise<StoreWriteResult> {
