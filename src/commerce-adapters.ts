@@ -31,6 +31,7 @@ export type CommerceActionContext = {
   agentProfile: string;
   action: ProductAction;
   policy: ProductPolicyDecision;
+  approved?: boolean;
 };
 
 export interface CommerceAdapter {
@@ -51,7 +52,7 @@ export function assertCommerceContext(context: CommerceActionContext, expectedBu
 }
 
 export function assertApprovalForExternalWrite(context: CommerceActionContext) {
-  if (context.policy.requiresApproval) {
+  if (context.policy.requiresApproval && !context.approved) {
     throw new Error("Owner approval required before external commerce write");
   }
 }
