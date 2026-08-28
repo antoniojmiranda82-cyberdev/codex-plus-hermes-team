@@ -62,7 +62,10 @@ export class McpHttpToolCaller implements MemoryToolCaller {
     });
 
     try {
-      await client.connect(transport);
+      // SDK 1.29's strict optional-property declarations disagree between the
+      // concrete HTTP transport and Client.connect even though this is the SDK's
+      // own supported transport. Keep the compatibility cast at this boundary.
+      await client.connect(transport as Parameters<Client["connect"]>[0]);
       return await client.callTool({ name, arguments: args });
     } finally {
       await client.close();
@@ -112,7 +115,8 @@ function filterSearchResult(result: unknown, root: string): unknown {
     for (const line of lines) {
       const header = line.match(/^\[(?:filename|content)\]\s+(.+)$/);
       if (header) {
-        keepFollowingDetail = header[1].startsWith(`${root}/`) || header[1] === root;
+        const matchedPath = header[1] ?? "";
+        keepFollowingDetail = matchedPath.startsWith(`${root}/`) || matchedPath === root;
         if (keepFollowingDetail) kept.push(line);
         continue;
       }
