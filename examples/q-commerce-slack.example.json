@@ -1,0 +1,10 @@
+{
+  "channels": {
+    "EXECUTIVE_COMMAND": "set-via-QCOM_SLACK_EXECUTIVE_COMMAND",
+    "CEO_APPROVALS": "set-via-QCOM_SLACK_CEO_APPROVALS",
+    "ASSET_AVE_OPS": "set-via-QCOM_SLACK_ASSET_AVE_OPS",
+    "DREAM_BLVD_OPS": "set-via-QCOM_SLACK_DREAM_BLVD_OPS",
+    "AGENT_ACTIVITY": "set-via-QCOM_SLACK_AGENT_ACTIVITY"
+  },
+  "note": "Keep real Slack conversation IDs in environment configuration, not in git."
+}
