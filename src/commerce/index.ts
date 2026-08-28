@@ -5,6 +5,7 @@ export * from "./dashboard-snapshot.js";
 export * from "./events.js";
 export * from "./executive-brief.js";
 export * from "./model-router.js";
+export * from "./runtime-config.js";
 export * from "./slack-routing.js";
 export * from "./store-adapter.js";
 export * from "./task-state.js";
