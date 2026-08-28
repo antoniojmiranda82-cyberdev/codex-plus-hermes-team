@@ -4,50 +4,63 @@ hermes:
 
 discovery:
   enabled: true
-  profilePrefix: "team-"
+  profilePrefix: "asset-dream:"
 
 safety:
   defaultSideEffectPolicy: advice_only
 
+localModels:
+  ollama:
+    enabled: true
+    baseUrl: http://127.0.0.1:11434
+    chatModel: llama3.2:1b
+    embedModel: mxbai-embed-large:latest
+
+memory:
+  projectId: asset-dream
+  root: Projects/asset-dream
+  bridgeUrlEnv: ASSET_DREAM_MEMORY_BRIDGE_URL
+  bridgeApiKeyEnv: ASSET_DREAM_MEMORY_BRIDGE_API_KEY
+
 agents:
-  - profile: team-architect
-    displayName: Architect
+  - profile: asset-dream:architect
+    displayName: Asset Dream Architect
     role: architecture
     description: System architecture, orchestration boundaries, interfaces, reliability.
     capabilities: [architecture, orchestration, interfaces, reliability, planning]
 
-  - profile: team-asset-commerce
-    displayName: Asset Commerce
+  - profile: asset-dream:asset-commerce
+    displayName: Asset Ave Commerce
     role: asset_ave_commerce
     description: Asset Ave Shopify catalog, merchandising, listing quality and store operations.
     capabilities: [shopify, catalog, merchandising, inventory_checks, ecommerce_ops]
 
-  - profile: team-dream-commerce
-    displayName: Dream Commerce
+  - profile: asset-dream:dream-commerce
+    displayName: Dream Blvd Commerce
     role: dream_blvd_commerce
     description: Dream Blvd WooCommerce merchandising, page QA and store operations.
     capabilities: [woocommerce, catalog, merchandising, page_qa, ecommerce_ops]
 
-  - profile: team-growth
-    displayName: Growth
+  - profile: asset-dream:growth
+    displayName: Asset Dream Growth
     role: growth
     description: SEO, campaign planning, social, email and SMS content queues.
     capabilities: [seo, social, email, sms, campaigns, copywriting]
 
-  - profile: team-analytics
-    displayName: Analytics
+  - profile: asset-dream:analytics
+    displayName: Asset Dream Analytics
     role: analytics
     description: Funnel, event, performance and conversion analysis across both businesses.
     capabilities: [analytics, posthog, funnels, conversion, reporting]
 
-  - profile: team-ops
-    displayName: Operations
+  - profile: asset-dream:ops
+    displayName: Asset Dream Operations
     role: operations
     description: Task operations, customer/order workflow analysis, anomaly and exception reporting.
     capabilities: [operations, workflow, reporting, exceptions, triage]
 
-  - profile: team-qa
-    displayName: QA Watchdog
+  - profile: asset-dream:qa
+    displayName: Asset Dream QA
     role: qa
     description: Validate agent outputs, task-state transitions, approval boundaries and factual grounding.
     capabilities: [qa, validation, safety, testing, audit]
