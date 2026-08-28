@@ -56,6 +56,7 @@ export class WebhookWorkflowTransport implements WorkflowTransport {
       throw new Error(`workflow transport failed with status ${response.status}`);
     }
 
-    return { transportId: response.headers.get("x-workflow-id") ?? undefined };
+    const transportId = response.headers.get("x-workflow-id");
+    return transportId ? { transportId } : {};
   }
 }
