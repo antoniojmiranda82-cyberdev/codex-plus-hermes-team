@@ -1,11 +1,20 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import type { BusinessId, OperatorService } from "./operator.js";
+import type { ObsidianMemoryAdapter } from "./obsidian-memory.js";
 import { assertAssetDreamProfile } from "./project-rosters.js";
 
 const BusinessSchema = z.enum(["asset-ave", "dream-blvd"]);
+const MemoryContextSchema = {
+  projectId: z.literal("asset-dream"),
+  agentId: z.string().min(1)
+};
 
-export function registerOperatorTools(server: McpServer, operator: OperatorService) {
+export function registerOperatorTools(
+  server: McpServer,
+  operator: OperatorService,
+  memory?: ObsidianMemoryAdapter
+) {
   server.tool(
     "operator_create_task",
     {
@@ -56,6 +65,37 @@ export function registerOperatorTools(server: McpServer, operator: OperatorServi
     { taskId: z.string().min(1) },
     async ({ taskId }) => jsonContent(await operator.retryTask(taskId))
   );
+
+  if (memory) {
+    server.tool(
+      "asset_dream_memory_health",
+      MemoryContextSchema,
+      async ({ projectId, agentId }) => jsonContent(await memory.health({ projectId, agentId }))
+    );
+
+    server.tool(
+      "asset_dream_memory_search",
+      { ...MemoryContextSchema, query: z.string().min(1) },
+      async ({ projectId, agentId, query }) => jsonContent(await memory.search({ projectId, agentId }, query))
+    );
+
+    server.tool(
+      "asset_dream_memory_read",
+      { ...MemoryContextSchema, path: z.string().min(1) },
+      async ({ projectId, agentId, path }) => jsonContent(await memory.read({ projectId, agentId }, path))
+    );
+
+    server.tool(
+      "asset_dream_memory_propose",
+      {
+        ...MemoryContextSchema,
+        path: z.string().min(1),
+        content: z.string().min(1)
+      },
+      async ({ projectId, agentId, path, content }) =>
+        jsonContent(await memory.propose({ projectId, agentId }, path, content))
+    );
+  }
 }
 
 function jsonContent(value: unknown) {
