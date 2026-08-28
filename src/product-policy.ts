@@ -38,7 +38,7 @@ const RESTRICTED_CATEGORY_TERMS = [
   "prescription drug",
   "controlled substance",
   "counterfeit",
-  "stolen goods"
+  "illicitly acquired merchandise"
 ];
 
 const APPROVAL_ACTIONS = new Set<ProductAction>([
