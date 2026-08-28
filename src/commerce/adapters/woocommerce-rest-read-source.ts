@@ -6,15 +6,7 @@ import type {
   StoreHealth,
   StoreMetrics
 } from "../store-adapter.js";
-
-export interface DreamBlvdReadSource {
-  health(): Promise<StoreHealth>;
-  products(): Promise<ProductSnapshot[]>;
-  orders(): Promise<OrderSnapshot[]>;
-  inventory(): Promise<InventorySnapshot[]>;
-  customers(): Promise<CustomerSnapshot[]>;
-  metrics(): Promise<StoreMetrics>;
-}
+import type { DreamBlvdReadSource } from "./dream-blvd.js";
 
 type WooCommerceRestConfig = {
   siteUrl: string;
