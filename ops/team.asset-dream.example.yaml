@@ -1,0 +1,53 @@
+hermes:
+  command: hermes
+  defaultCwd: .
+
+discovery:
+  enabled: true
+  profilePrefix: "team-"
+
+safety:
+  defaultSideEffectPolicy: advice_only
+
+agents:
+  - profile: team-architect
+    displayName: Architect
+    role: architecture
+    description: System architecture, orchestration boundaries, interfaces, reliability.
+    capabilities: [architecture, orchestration, interfaces, reliability, planning]
+
+  - profile: team-asset-commerce
+    displayName: Asset Commerce
+    role: asset_ave_commerce
+    description: Asset Ave Shopify catalog, merchandising, listing quality and store operations.
+    capabilities: [shopify, catalog, merchandising, inventory_checks, ecommerce_ops]
+
+  - profile: team-dream-commerce
+    displayName: Dream Commerce
+    role: dream_blvd_commerce
+    description: Dream Blvd WooCommerce merchandising, page QA and store operations.
+    capabilities: [woocommerce, catalog, merchandising, page_qa, ecommerce_ops]
+
+  - profile: team-growth
+    displayName: Growth
+    role: growth
+    description: SEO, campaign planning, social, email and SMS content queues.
+    capabilities: [seo, social, email, sms, campaigns, copywriting]
+
+  - profile: team-analytics
+    displayName: Analytics
+    role: analytics
+    description: Funnel, event, performance and conversion analysis across both businesses.
+    capabilities: [analytics, posthog, funnels, conversion, reporting]
+
+  - profile: team-ops
+    displayName: Operations
+    role: operations
+    description: Task operations, customer/order workflow analysis, anomaly and exception reporting.
+    capabilities: [operations, workflow, reporting, exceptions, triage]
+
+  - profile: team-qa
+    displayName: QA Watchdog
+    role: qa
+    description: Validate agent outputs, task-state transitions, approval boundaries and factual grounding.
+    capabilities: [qa, validation, safety, testing, audit]
