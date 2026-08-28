@@ -12,3 +12,5 @@ export * from "./team-schema.js";
 export * from "./workflow-bridge.js";
 export * from "./adapters/asset-ave.js";
 export * from "./adapters/dream-blvd.js";
+export * from "./adapters/shopify-graphql-read-source.js";
+export * from "./adapters/woocommerce-rest-read-source.js";
