@@ -6,8 +6,12 @@ on:
     paths:
       - 'src/commerce/**'
       - 'tests/commerce-*.test.ts'
+      - 'tests/q-commerce.e2e.test.ts'
       - 'dashboard/**'
+      - 'docs/q-commerce/**'
       - 'examples/q-commerce-team.example.yaml'
+      - 'examples/q-commerce-slack.example.json'
+      - 'examples/q-commerce.env.example'
       - '.github/workflows/q-commerce-ci.yml'
   push:
     branches: [q-commerce-command]
@@ -36,3 +40,16 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Create exact-source checkpoint
+        if: success()
+        run: git archive --format=zip --output=q-commerce-source-${GITHUB_SHA}.zip HEAD
+
+      - name: Upload source checkpoint
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: q-commerce-source-${{ github.sha }}
+          path: q-commerce-source-${{ github.sha }}.zip
+          retention-days: 30
+          if-no-files-found: error
