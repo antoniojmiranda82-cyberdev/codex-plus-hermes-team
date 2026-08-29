@@ -19,8 +19,8 @@ localModels:
 memory:
   projectId: asset-dream
   root: Projects/asset-dream
-  bridgeUrlEnv: ASSET_DREAM_MEMORY_BRIDGE_URL
-  bridgeApiKeyEnv: ASSET_DREAM_MEMORY_BRIDGE_API_KEY
+  mcpUrlEnv: ASSET_DREAM_OBSIDIAN_MCP_URL
+  mcpTokenEnv: ASSET_DREAM_OBSIDIAN_MCP_TOKEN
 
 agents:
   - profile: asset-dream:architect
