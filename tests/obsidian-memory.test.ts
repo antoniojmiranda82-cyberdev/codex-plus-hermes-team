@@ -1,13 +1,16 @@
 import { describe, expect, it } from "vitest";
-import { ObsidianMemoryAdapter, type MemoryToolCaller } from "../src/obsidian-memory.js";
+import {
+  ObsidianMemoryAdapter,
+  normalizeMcpUrl,
+  type MemoryToolCaller
+} from "../src/obsidian-memory.js";
 
 class RecordingCaller implements MemoryToolCaller {
   calls: Array<{ name: string; args: Record<string, unknown> }> = [];
-  constructor(private readonly responses: Record<string, unknown> = {}) {}
 
   async callTool(name: string, args: Record<string, unknown>): Promise<unknown> {
     this.calls.push({ name, args });
-    return this.responses[name] ?? { content: [{ type: "text", text: "ok" }] };
+    return { content: [{ type: "text", text: "ok" }] };
   }
 }
 
@@ -26,6 +29,31 @@ describe("ObsidianMemoryAdapter", () => {
     ).rejects.toThrow(/asset-dream/i);
   });
 
+  it("uses Vault as MCP list_notes for health checks", async () => {
+    const caller = new RecordingCaller();
+    const adapter = new ObsidianMemoryAdapter(caller);
+
+    await adapter.health(context);
+
+    expect(caller.calls).toEqual([
+      { name: "list_notes", args: { path: "Projects/asset-dream" } }
+    ]);
+  });
+
+  it("scopes searches at the MCP server to the Asset Dream folder", async () => {
+    const caller = new RecordingCaller();
+    const adapter = new ObsidianMemoryAdapter(caller);
+
+    await adapter.search(context, "launch plan");
+
+    expect(caller.calls).toEqual([
+      {
+        name: "search_notes",
+        args: { folder: "Projects/asset-dream", text: "launch plan" }
+      }
+    ]);
+  });
+
   it("scopes reads under the Asset Dream memory root", async () => {
     const caller = new RecordingCaller();
     const adapter = new ObsidianMemoryAdapter(caller);
@@ -34,7 +62,7 @@ describe("ObsidianMemoryAdapter", () => {
 
     expect(caller.calls).toEqual([
       {
-        name: "get_file_contents",
+        name: "read_note",
         args: { path: "Projects/asset-dream/Research/winners.md" }
       }
     ]);
@@ -61,33 +89,18 @@ describe("ObsidianMemoryAdapter", () => {
       }
     ]);
   });
+});
 
-  it("filters search output so unrelated project paths are not returned", async () => {
-    const caller = new RecordingCaller({
-      search: {
-        content: [
-          {
-            type: "text",
-            text: [
-              "[content] Projects/asset-dream/Research/product.md",
-              "       2 match(es) — snippet: winning item",
-              "[content] Projects/Q-Core/private.md",
-              "       1 match(es) — snippet: unrelated",
-              "[filename] Projects/asset-dream/Plans/launch.md",
-              "       launch.md"
-            ].join("\n")
-          }
-        ]
-      }
-    });
-    const adapter = new ObsidianMemoryAdapter(caller);
+describe("normalizeMcpUrl", () => {
+  it("adds the Vault as MCP endpoint when given only the local server origin", () => {
+    expect(normalizeMcpUrl("http://localhost:27123/").toString()).toBe(
+      "http://localhost:27123/mcp"
+    );
+  });
 
-    const result = await adapter.search(context, "launch");
-    const text = JSON.stringify(result);
-
-    expect(text).toContain("Projects/asset-dream/Research/product.md");
-    expect(text).toContain("Projects/asset-dream/Plans/launch.md");
-    expect(text).not.toContain("Q-Core");
-    expect(text).not.toContain("unrelated");
+  it("preserves an explicit MCP endpoint", () => {
+    expect(normalizeMcpUrl("http://localhost:27123/mcp").toString()).toBe(
+      "http://localhost:27123/mcp"
+    );
   });
 });
