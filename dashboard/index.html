@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+  <title>Q Commerce Command</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand-lockup">
+        <div class="q-mark">Q</div>
+        <div><strong>Commerce</strong><span>Command</span></div>
+      </div>
+      <nav id="nav" class="nav"></nav>
+      <div class="system-chip"><span class="pulse"></span><div><b>Control plane</b><small>Supervised autonomy</small></div></div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div>
+          <p class="eyeline">OWNER CONSOLE</p>
+          <h1 id="screen-title">Executive command</h1>
+        </div>
+        <div class="top-actions">
+          <button id="emergency-stop" class="danger-button">Emergency stop</button>
+          <div class="owner-avatar">AM</div>
+        </div>
+      </header>
+
+      <section id="content" class="content"></section>
+    </main>
+  </div>
+
+  <dialog id="agent-dialog" class="agent-dialog">
+    <button id="close-agent" class="dialog-close" aria-label="Close">×</button>
+    <div id="agent-detail"></div>
+  </dialog>
+
+  <dialog id="stop-dialog" class="stop-dialog">
+    <h2>Emergency stop</h2>
+    <p>Pause all external commerce actions while keeping read-only monitoring available.</p>
+    <div class="dialog-actions">
+      <button id="cancel-stop">Cancel</button>
+      <button id="confirm-stop" class="danger-button">Pause all writes</button>
+    </div>
+  </dialog>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+hermes:
+  command: hermes
+  defaultCwd: /absolute/path/to/q-commerce-command
+
+discovery:
+  enabled: true
+  profilePrefix: "qcom-"
+
+safety:
+  defaultSideEffectPolicy: external_side_effects_need_approval
+
+kanban:
+  enabled: true
+
+agents:
+  - profile: qcom-chief-of-staff
+    displayName: Q Chief of Staff
+    role: executive_orchestrator
+    description: Owner-facing executive coordinator. Synthesizes store and department reporting, ranks risks/opportunities, routes work, and escalates approvals.
+    capabilities: [executive-summary, routing, prioritization, approvals, escalation, cross-brand-coordination]
+
+  - profile: qcom-asset-ave-gm
+    displayName: Asset Ave General Manager
+    role: brand_general_manager
+    description: Accountable for Asset Ave revenue, margin, operations, inventory, customer experience, and growth execution.
+    capabilities: [ecommerce, operations, merchandising, growth, revenue, reporting]
+
+  - profile: qcom-dream-blvd-gm
+    displayName: Dream Blvd General Manager
+    role: brand_general_manager
+    description: Accountable for Dream Blvd revenue, margin, operations, inventory, customer experience, and growth execution.
+    capabilities: [ecommerce, operations, merchandising, growth, revenue, reporting]
+
+  - profile: qcom-growth-director
+    displayName: Growth Director
+    role: growth
+    description: Owns cross-brand acquisition, retention, promotions, funnel experiments, and growth planning.
+    capabilities: [growth, campaigns, funnels, experimentation, retention, acquisition]
+
+  - profile: qcom-marketing-strategist
+    displayName: Marketing Strategist
+    role: marketing
+    description: Creates campaign strategy, calendars, offers, launches, and channel briefs for both brands.
+    capabilities: [marketing-strategy, campaign-planning, offers, launches]
+
+  - profile: qcom-copywriter
+    displayName: Conversion Copywriter
+    role: copywriting
+    description: Produces product, landing page, ad, email, SMS, and social copy aligned to each brand.
+    capabilities: [copywriting, product-copy, ad-copy, email-copy, sms-copy, landing-pages]
+
+  - profile: qcom-social-director
+    displayName: Social Director
+    role: social_media
+    description: Runs the multi-platform social calendar and delegates platform-specific creative and publishing plans.
+    capabilities: [social-strategy, content-calendar, community, analytics]
+
+  - profile: qcom-shortform-producer
+    displayName: Short-Form Producer
+    role: video_social
+    description: Produces concepts, scripts, shot lists, hooks, and repurposing plans for TikTok, Reels, Shorts, and Facebook video.
+    capabilities: [tiktok, instagram-reels, youtube-shorts, facebook-reels, scripts, hooks]
+
+  - profile: qcom-pinterest-seo-social
+    displayName: Pinterest & Discovery Agent
+    role: discovery_social
+    description: Builds Pinterest and evergreen social discovery plans with keyword-focused creative briefs.
+    capabilities: [pinterest, social-seo, evergreen-content, discovery]
+
+  - profile: qcom-email-lifecycle
+    displayName: Email Lifecycle Manager
+    role: email_marketing
+    description: Owns welcome, cart recovery, post-purchase, review, win-back, VIP, launch, and promotional email flows.
+    capabilities: [email, lifecycle, segmentation, automations, ab-testing]
+
+  - profile: qcom-sms-lifecycle
+    displayName: SMS Lifecycle Manager
+    role: sms_marketing
+    description: Owns consent-aware SMS campaigns, cart recovery, alerts, launches, VIP, and back-in-stock messaging.
+    capabilities: [sms, lifecycle, segmentation, cart-recovery, compliance]
+
+  - profile: qcom-product-scout
+    displayName: Product Scout
+    role: product_intelligence
+    description: Finds and scores products using demand, margin, trend velocity, competition, shipping complexity, and return risk.
+    capabilities: [product-research, trend-analysis, opportunity-scoring, competitor-research]
+
+  - profile: qcom-pricing-margin
+    displayName: Pricing & Margin Agent
+    role: pricing
+    description: Monitors margin, competitor pricing, bundles, discounts, and pricing opportunities while protecting contribution margin.
+    capabilities: [pricing, margin, bundles, promotions, profitability]
+
+  - profile: qcom-inventory-manager
+    displayName: Inventory Manager
+    role: inventory
+    description: Tracks inventory health, stockout risk, reorder points, dead stock, and sales velocity.
+    capabilities: [inventory, forecasting, replenishment, stockout-risk, dead-stock]
+
+  - profile: qcom-supplier-manager
+    displayName: Supplier Manager
+    role: supplier_operations
+    description: Tracks supplier reliability, cost changes, availability, shipping estimates, and alternatives.
+    capabilities: [suppliers, sourcing, cost-monitoring, shipping, vendor-risk]
+
+  - profile: qcom-sales-conversion
+    displayName: Sales & Conversion Manager
+    role: conversion
+    description: Optimizes product pages, cart, checkout, upsells, cross-sells, bundles, and conversion experiments.
+    capabilities: [conversion-rate, checkout, upsell, cross-sell, bundles, cro]
+
+  - profile: qcom-customer-experience
+    displayName: Customer Experience Lead
+    role: customer_service
+    description: Handles support triage, order questions, review collection, sentiment detection, and escalation.
+    capabilities: [support, order-support, reviews, sentiment, escalation]
+
+  - profile: qcom-seo-director
+    displayName: SEO Director
+    role: seo
+    description: Owns technical SEO, product/category SEO, content plans, schema, internal linking, and competitor search analysis.
+    capabilities: [seo, technical-seo, content-seo, schema, internal-linking, keywords]
+
+  - profile: qcom-competitive-intel
+    displayName: Competitive Intelligence Agent
+    role: competitive_intelligence
+    description: Monitors competitor products, pricing, promotions, positioning, landing pages, and social signals, then converts changes into recommended actions.
+    capabilities: [competitive-research, web-research, pricing-intelligence, promotion-monitoring]
+
+  - profile: qcom-cfo
+    displayName: AI CFO
+    role: finance
+    description: Tracks revenue, COGS, fees, refunds, ad spend, gross profit, cash flow, and budget variance across both brands.
+    capabilities: [finance, cash-flow, profitability, budgeting, variance-analysis]
+
+  - profile: qcom-data-analyst
+    displayName: Commerce Data Analyst
+    role: analytics
+    description: Explains why KPIs moved, traces funnels, compares cohorts, and creates owner-ready daily and weekly performance summaries.
+    capabilities: [analytics, funnels, cohorts, kpis, attribution, reporting]
+
+  - profile: qcom-automation-engineer
+    displayName: Automation Engineer
+    role: automation
+    description: Designs n8n/NATS/A2A workflows connecting stores, agents, analytics, notifications, and approvals.
+    capabilities: [n8n, nats, a2a, workflows, integrations, orchestration]
+
+  - profile: qcom-tech-director
+    displayName: Technology Director
+    role: technology
+    description: Owns storefront reliability, integrations, command-center services, deployments, observability, and engineering priorities.
+    capabilities: [nextjs, wordpress, shopify, integrations, deployment, reliability]
+
+  - profile: qcom-risk-compliance
+    displayName: Risk & Compliance Agent
+    role: compliance
+    description: Reviews privacy, promotions, consent, customer communications, access boundaries, and agent side effects before risky actions.
+    capabilities: [compliance, privacy, consent, risk, approvals, policy]
+
+  - profile: qcom-qa-reviewer
+    displayName: QA & Brand Guardian
+    role: quality_assurance
+    description: Reviews customer-facing content and operational changes for factual accuracy, brand fit, broken links, policy issues, and unintended side effects.
+    capabilities: [qa, brand-review, content-review, release-gates, validation]
+
+  - profile: qcom-agent-performance
+    displayName: Agent Performance Manager
+    role: agent_ops
+    description: Measures agent completion rate, accuracy, revenue influence, approval rejection rate, latency, failure rate, and cost.
+    capabilities: [agent-evaluation, kpis, quality, routing-quality, performance]
